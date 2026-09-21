@@ -1,1 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusMarket</title>
+  <!-- Linking the CSS file -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>CampusMarket</h1>
+    <p>Your one-stop campus marketplace</p>
+  </header>
 
+  <nav>
+    <label for="filter">Filter by Category:</label>
+    <select id="filter">
+      <option value="all">All</option>
+      <option value="electronics">Electronics</option>
+      <option value="books">Books</option>
+      <option value="fashion">Fashion</option>
+    </select>
+  </nav>
+
+  <main>
+    <section class="catalog">
+      <div class="item electronics">
+        <img src="images/laptop.jpg" alt="Laptop">
+        <h3>Laptop</h3>
+        <p>Price: KSh 45,000</p>
+      </div>
+
+      <div class="item books">
+        <img src="images/book.jpg" alt="Book">
+        <h3>Data Structures Book</h3>
+        <p>Price: KSh 1,200</p>
+      </div>
+
+      <div class="item electronics">
+        <img src="images/phone.jpg" alt="Phone">
+        <h3>Smartphone</h3>
+        <p>Price: KSh 25,000</p>
+      </div>
+
+      <div class="item fashion">
+        <img src="images/shoes.jpg" alt="Shoes">
+        <h3>Running Shoes</h3>
+        <p>Price: KSh 3,500</p>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <h2>Add New Item</h2>
+      <form id="addItemForm">
+        <input type="text" id="itemName" placeholder="Item Name" required>
+        <input type="number" id="itemPrice" placeholder="Price (KSh)" required>
+        <select id="itemCategory" required>
+          <option value="">Select Category</option>
+          <option value="electronics">Electronics</option>
+          <option value="books">Books</option>
+          <option value="fashion">Fashion</option>
+        </select>
+        <input type="email" id="sellerEmail" placeholder="Seller Email" required>
+        <button type="submit">Add Item</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 CampusMarket | Developed for CCS 2314</p>
+  </footer>
+
+  <!-- Linking the JavaScript file -->
+  <script src="script.js"></script>
+</body>
+</html>
