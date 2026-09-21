@@ -61,7 +61,7 @@ form input, form select, form button {
 }
 
 form button {
-  background-color: #0077cc;
+  background-color: grey;
   color: white;
   border: none;
   cursor: pointer;
