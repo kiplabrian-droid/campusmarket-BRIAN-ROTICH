@@ -1,75 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CampusMarket</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimedia University Campus Market</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <header>
-    <h1>CampusMarket</h1>
-    <p>Your one-stop campus marketplace</p>
-  </header>
 
-  <nav>
-    <label for="filter">Filter by Category:</label>
-    <select id="filter">
-      <option value="all">All</option>
-      <option value="electronics">Electronics</option>
-      <option value="books">Books</option>
-      <option value="fashion">Fashion</option>
-    </select>
-  </nav>
+    <!-- Top Announcement Bar -->
+    <div class="top-bar">
+        <span><i class="fa-solid fa-graduation-cap"></i> MMU Official Campus Market • Buy, Sell & Swap
+            On-Campus</span>
+        <span class="support-email"><i class="fa-solid fa-envelope"></i> market@mmu.ac.ke</span>
+    </div>
 
-  <main>
-    <section class="catalog">
-      <div class="item electronics">
-        <img src="images/laptop.jpg" alt="Laptop">
-        <h3>Laptop</h3>
-        <p>Price: KSh 45,000</p>
-      </div>
+    <!-- Header / Navbar -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="brand-logo" onclick="showCategory('all')">
+                <i class="fa-solid fa-store logo-icon"></i>
+                <span>MMU Market</span>
+            </a>
 
-      <div class="item books">
-        <img src="images/book.jpg" alt="Book">
-        <h3>Data Structures Book</h3>
-        <p>Price: KSh 1,200</p>
-      </div>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search laptops, calculators, hoodies, textbooks..."
+                    onkeyup="filterProducts()">
+            </div>
 
-      <div class="item electronics">
-        <img src="images/phone.jpg" alt="Phone">
-        <h3>Smartphone</h3>
-        <p>Price: KSh 25,000</p>
-      </div>
+            <div class="nav-actions">
+                <button class="btn btn-sell" onclick="openModal('postModal')">
+                    <i class="fa-solid fa-plus-circle"></i> Sell Item
+                </button>
 
-      <div class="item fashion">
-        <img src="images/shoes.jpg" alt="Shoes">
-        <h3>Running Shoes</h3>
-        <p>Price: KSh 3,500</p>
-      </div>
-    </section>
+                <!-- Guest View Buttons -->
+                <div id="guestButtons" class="auth-buttons">
+                    <button class="btn btn-login" onclick="openAuth('login')">Login</button>
+                    <button class="btn btn-register" onclick="openAuth('register')">Register</button>
+                </div>
 
-    <section class="form-section">
-      <h2>Add New Item</h2>
-      <form id="addItemForm">
-        <input type="text" id="itemName" placeholder="Item Name" required>
-        <input type="number" id="itemPrice" placeholder="Price (KSh)" required>
-        <select id="itemCategory" required>
-          <option value="">Select Category</option>
-          <option value="electronics">Electronics</option>
-          <option value="books">Books</option>
-          <option value="fashion">Fashion</option>
-        </select>
-        <input type="email" id="sellerEmail" placeholder="Seller Email" required>
-        <button type="submit">Add Item</button>
-      </form>
-    </section>
-  </main>
+                <!-- Logged In User View -->
+                <div id="userProfileBar" class="user-profile" style="display: none;">
+                    <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                    <span id="userNameDisplay" class="user-name">Student</span>
+                    <button class="btn btn-logout" onclick="logout()" title="Logout">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-  <footer>
-    <p>&copy; 2026 CampusMarket </p>
-  </footer>
+    <!-- Main Body Content -->
+    <main class="main-layout">
 
-  <script src="script.js"></script>
+        <!-- Hero Carousel Wallpaper Section -->
+        <section class="hero-carousel">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Slide 1 -->
+                <div class="carousel-slide active slide-bg-1">
+                    <div class="slide-content">
+                        <span class="badge">Official Campus Portal</span>
+                        <h1>Welcome to MMU Campus Market</h1>
+                        <p>The safest place to buy, sell, and trade textbooks, tech gadgets, fashion, and daily
+                            essentials with fellow MMU students.</p>
+                        <div class="slide-cta">
+                            <button class="btn btn-register" onclick="scrollToMarket()">Browse Deals</button>
+                            <button class="btn btn-sell" onclick="openModal('postModal')">Post Your Ad</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-slide slide-bg-2">
+                    <div class="slide-content">
+                        <span class="badge">Tech & Gadgets</span>
+                        <h1>Laptops, Phones & Scientific Calculators</h1>
+                        <p>Upgrade your study gear at student-friendly prices directly from graduating seniors.</p>
+                        <div class="slide-cta">
+                            <button class="btn btn-login" onclick="showCategory('electronics')">Explore
+                                Electronics</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-slide slide-bg-3">
+                    <div class="slide-content">
+                        <span class="badge">Fresh Grocery</span>
+                        <h1>Hostel Fresh Produce & Fruits</h1>
+                        <p>Get fresh fruits and vegetables delivered right near your hostel block every week.</p>
+                        <div class="slide-cta">
+                            <button class="btn btn-login" onclick="showCategory('fruits-vegetables')">Shop
+                                Grocery</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carousel Navigation Arrows -->
+            <button class="carousel-arrow prev-arrow" onclick="moveSlide(-1)"><i
+                    class="fa-solid fa-chevron-left"></i></button>
+            <button class="carousel-arrow next-arrow" onclick="moveSlide(1)"><i
+                    class="fa-solid fa-chevron-right"></i></button>
+
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <span class="indicator active" onclick="setSlide(0)"></span>
+                <span class="indicator" onclick="setSlide(1)"></span>
+                <span class="indicator" onclick="setSlide(2)"></span>
+            </div>
+        </section>
+
+        <!-- Hypertext Category Bar -->
+        <section class="category-nav-section" id="marketSection">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-list"></i> Category Index</h2>
+                <p>Click on any hyperlinked category to instantly filter campus items</p>
+            </div>
+
+            <nav class="category-links" id="categoryLinks">
+                <a href="#marketSection" class="category-link active" onclick="showCategory('all')">
+                    <i class="fa-solid fa-grip"></i> All Items
+                </a>
+                <a href="#marketSection" class="category-link" onclick="showCategory('clothes')">
+                    <i class="fa-solid fa-shirt"></i> Clothes
+                </a>
+                <a href="#marketSection" class="category-link" onclick="showCategory('stationery')">
+                    <i class="fa-solid fa-pen-ruler"></i> Stationery
+                </a>
+                <a href="#marketSection" class="category-link" onclick="showCategory('electronics')">
+                    <i class="fa-solid fa-laptop"></i> Electronics (Phones, Laptops & Calculators)
+                </a>
+                <a href="#marketSection" class="category-link" onclick="showCategory('fruits-vegetables')">
+                    <i class="fa-solid fa-apple-whole"></i> Fruits & Vegetables
+                </a>
+            </nav>
+        </section>
+
+        <!-- Product Grid Listing -->
+        <section class="product-catalog">
+            <div class="catalog-header">
+                <h3 id="categoryHeading">All Published Campus Items</h3>
+                <span class="item-count" id="itemCount">0 Items</span>
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                <!-- Products generated dynamically via script.js -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Login/Register Authentication Modal -->
+    <div class="modal-backdrop" id="authModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('authModal')">&times;</button>
+
+            <div class="modal-tabs">
+                <button class="modal-tab active" id="tabLogin" onclick="toggleAuthTab('login')">Login</button>
+                <button class="modal-tab" id="tabRegister" onclick="toggleAuthTab('register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-envelope"></i> MMU Student Email</label>
+                    <input type="email" id="loginEmail" placeholder="student@mmu.ac.ke" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-block">Sign In</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" style="display: none;" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-user"></i> Full Name</label>
+                    <input type="text" id="regName" placeholder="e.g. Jane Doe" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-id-card"></i> Reg Number</label>
+                    <input type="text" id="regId" placeholder="e.g. BIT-01-0022/2023" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-envelope"></i> MMU Student Email</label>
+                    <input type="email" id="regEmail" placeholder="student@mmu.ac.ke" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-lock"></i> Create Password</label>
+                    <input type="password" id="regPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-block">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Post Item Modal -->
+    <div class="modal-backdrop" id="postModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('postModal')">&times;</button>
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-tag"></i> List an Item for Sale</h3>
+                <p>Post your item to reach thousands of MMU students.</p>
+            </div>
+
+            <form id="postForm" onsubmit="handlePostItem(event)">
+                <div class="form-group">
+                    <label>Product Title</label>
+                    <input type="text" id="itemTitle" placeholder="e.g. Casio FX-991 Scientific Calculator" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="itemCategory" required>
+                        <option value="clothes">Clothes</option>
+                        <option value="stationery">Stationery</option>
+                        <option value="electronics">Electronics (Phones, Laptops & Calculators)</option>
+                        <option value="fruits-vegetables">Fruits & Vegetables</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price (KSh)</label>
+                    <input type="number" id="itemPrice" placeholder="e.g. 1500" required>
+                </div>
+
+                <!-- Image Input Options -->
+                <div class="form-group">
+                    <label><i class="fa-solid fa-upload"></i> Upload Image File</label>
+                    <input type="file" id="itemImageFile" accept="image/*" onchange="previewSelectedImage(event)">
+                </div>
+                <div class="form-group">
+                    <label>OR Image Filename/URL</label>
+                    <input type="text" id="itemImageText" placeholder="e.g. casio fx991 calculator.jpg OR https://...">
+                </div>
+
+                <!-- Image Preview Area -->
+                <div id="imagePreviewContainer" style="display: none; text-align: center; margin-bottom: 1rem;">
+                    <img id="imagePreview" src="" alt="Preview"
+                        style="max-height: 120px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                </div>
+
+                <div class="form-group">
+                    <label>WhatsApp Contact Phone</label>
+                    <input type="tel" id="itemPhone" placeholder="+254 712 345678" required>
+                </div>
+                <div class="form-group">
+                    <label>Description / Hostel Pick-up Location</label>
+                    <textarea id="itemDesc" rows="3" placeholder="Condition, pickup location, hostel block, etc."
+                        required></textarea>
+                </div>
+                <button type="submit" class="btn-block">Publish Listing</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 Multimedia University (MMU) Student Marketplace. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#"
+                    onclick="alert('Safety Tip: Always meet in well-lit public campus areas like the Student Centre or Library!')">Safety
+                    Guidelines</a>
+                <a href="#" onclick="alert('For campus market support, visit the Student Guild office.')">Help
+                    Centre</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- External JS Script -->
+    <script src="script.js"></script>
 </body>
+
 </html>
